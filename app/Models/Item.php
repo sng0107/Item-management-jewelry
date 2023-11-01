@@ -13,9 +13,17 @@ class Item extends Model
      */
     protected $fillable = [
         'user_id',
-        'name',
-        'type',
-        'detail',
+        'type_id',
+        'supplier_id',
+        'item_code',
+        'item_name',
+        'retail_price',
+        'stock',
+        'img',
+        'spec',
+        'material',
+        'sales_period',
+        'comment',
     ];
 
     /**
@@ -33,4 +41,38 @@ class Item extends Model
      */
     protected $casts = [
     ];
+
+
+    /**
+     * リレーション
+     */
+    
+    public function cost()
+    {
+        return $this->hasOne(Cost::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
+
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
+
+
+
 }

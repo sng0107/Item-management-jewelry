@@ -291,9 +291,119 @@ return [
 
     'menu' => [
         [
-            'text' => '商品一覧',
+            'text' => '商品管理',
             'url'  => 'items',
-            'icon' => 'fas fa-gamepad',
+            'icon' => 'far fa-gem',
+            'submenu' => [
+                [
+                    'text' => '　　商品一覧',
+                    'url'  => 'items',
+                    'icon_color' => '',
+                    'icon' => '',
+                ],
+                [
+                    'key'  => '商品登録_role1_only',
+                    'text' => '　　商品登録',
+                    'url'  => 'items/add',
+                    'icon_color' => '',
+                    'icon' => '',
+                ],
+                
+                ],
+        ],
+        [
+            'text' => '販売管理',
+            'url'  => 'sales',
+            'icon' => 'far fa-gem',
+            'submenu' => [
+                [
+                    'text' => '　　販売履歴',
+                    'url'  => 'sales',
+                    'icon_color' => '',
+                    'icon' => '',
+                ],
+                [
+                    'text' => '　　販売登録',
+                    'url'  => 'sales/search',
+                    'icon_color' => '',
+                    'icon' => '',
+                ],
+            ],
+        ],
+        [
+            'key'  => '仕入管理_role1_only',
+            'text' => '仕入管理',
+            'url'  => 'purchases',
+            'icon' => 'far fa-gem',
+            'submenu' => [
+                [
+                    'key'  => '仕入履歴_role1_only',
+                    'text' => '　　仕入履歴',
+                    'url'  => 'purchases',
+                    'icon_color' => '',
+                    'icon' => '',
+                ],
+                [
+                    'key'  => '仕入登録_role1_only',
+                    'text' => '　　仕入登録',
+                    'url'  => 'purchases/search',
+                    'icon_color' => '',
+                    'icon' => '',
+                ],
+            ],
+        ],
+        [
+            'key'        => 'コスト管理_role1_only',
+            'text' => 'コスト管理',
+            'url'  => 'costs',
+            'icon' => 'far fa-gem', 
+            'submenu' => [
+                [
+                    'key'  => '　　コスト一覧_role1_only',
+                    'text' => '　　コスト一覧',
+                    'url'  => 'costs',
+                    'icon_color' => '',
+                    'icon' => '',
+                ],
+               
+            ],
+        ],
+        [   
+            'key'  => 'カテゴリー管理_role1_only',
+            'text' => 'カテゴリー管理',
+            'url'  => 'categories',
+            'icon' => 'far fa-gem',
+            'submenu' => [
+                [
+                    'key'  => '　　アイテム_role1_only',
+                    'text' => '　　アイテム',
+                    'url'  => 'categories/type',
+                    'icon_color' => '',
+                    'icon' => '',
+                ],
+                [
+                    'key'  => '　　仕入先_role1_only',
+                    'text' => '　　仕入先',
+                    'url'  => 'categories/supplier',
+                    'icon_color' => '',
+                    'icon' => '',
+                ],
+            ],
+        ],
+        [
+            'key'  => 'アカウント管理_role1_only',
+            'text' => 'アカウント管理',
+            'url'  => '',
+            'icon' => 'far fa-gem',
+            'submenu' => [
+                [
+                    'key'  => '　　アカウント_role1_only',
+                    'text' => '　　アカウント',
+                    'url'  => 'users',
+                    'icon_color' => '',
+                    'icon' => '',
+                ],
+            ],
         ],
 
         // AdminLTEデフォルト

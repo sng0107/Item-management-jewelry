@@ -13,11 +13,19 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned()->index();
-            $table->string('name', 100)->index();
-            $table->string('type', 100)->nullable();
-            $table->string('detail', 500)->nullable();
-            $table->timestamps();
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('type_id')->unsigned();
+            $table->bigInteger('supplier_id')->unsigned();
+            $table->string('item_code', 20)->uniqid()->index();
+            $table->string('item_name', 50)->index();
+            $table->integer('retail_price')->default('0');
+            $table->integer('stock')->default('0');
+            $table->text('img')->nullable();
+            $table->string('spec', 100)->nullable();
+            $table->string('material',100)->nullable();
+            $table->string('sales_period',30);
+            $table->string('comment', 500)->nullable();
+             $table->timestamps();
         });
     }
 

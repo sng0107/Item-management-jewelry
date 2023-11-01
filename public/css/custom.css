@@ -1,0 +1,275 @@
+/* 全ページ共通のCSS */
+body{
+    max-width:100%;
+}
+
+label {
+    font-size: 0.75rem;
+}
+
+input.input-size{
+    height:2rem;
+    padding: -0.1rem auto !important;
+    font-size: 0.75rem !important;
+}
+
+select.input-size{
+    height:2rem;
+    padding: -0.1rem auto !important;
+    font-size: 0.75rem !important;
+}
+
+
+select{
+       font-size: 0.75rem !important;
+}
+
+textarea {
+    font-size: 0.75rem !important;
+}
+
+p {
+    font-size: 0.75rem;
+   }
+
+th {
+    font-size: 0.75rem;
+}
+
+td {
+    font-size: 0.75rem;
+}
+
+h1 {
+    font-size: 1.6rem !important;
+}
+
+p.error-text {
+    font-size: 1rem !important;
+}
+
+
+.form-group {
+    margin: 0 auto;
+}
+
+.content-header {
+    padding-bottom: 0 ;
+}
+
+.search-result {
+    font-size: 1rem;
+    color: blue;
+}
+
+.alert-size {
+    font-size:1rem;
+    width: 40%;
+    margin: auto;
+    text-align: center;  
+}
+
+.error-font-size {
+    font-size: 0.75rem;
+}
+
+
+/* ボタンのCSS */
+.new-add-btn a {
+    font-size: 0.8rem;
+}
+
+button.search-btn  {
+    font-size: 0.8rem !important;
+}
+
+a.search-clear-btn {
+    font-size: 0.8rem !important;
+}
+
+a.detail-btn{
+    font-size: 0.7rem;
+}
+
+a.edit-btn{
+    font-size: 0.7rem;
+}
+
+button.delete-btn{
+    font-size: 0.8rem ;
+}
+
+button.update-btn{
+    font-size: 0.8rem ;
+}
+
+a.back-btn{
+    font-size: 0.8rem ;
+}
+
+button.add-btn{
+    font-size: 0.8rem ;
+}
+
+/* 登録画面、編集画面、詳細画面の配置CSS */
+
+.type-add-form {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.supplier-add-form {
+    width: 70%;
+    margin:0 auto;
+}
+
+.type-edit-form {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.supplier-edit-form {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.user-edit-form {
+    width: 70%;
+    margin: 0 auto;
+}
+
+
+.user-index-form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.type-index-form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.supplier-index-form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+.cost_cards{
+    display: flex; 
+    width: 100%;
+}
+
+.cost_card {
+    width:50%;
+}
+
+
+.cost-content-cards {
+    display: flex; 
+    width: 100%;
+}
+
+.cost-content-card {
+    width: 100%;
+}
+
+.cost-content-card input {
+    text-align: right !important;
+}
+
+.sales-cards{
+    display: flex; 
+    width: 100%;
+}
+
+.sales-card {
+    width:50%;
+}
+
+.purchase-cards{
+    display: flex; 
+    width: 100%;
+}
+
+.purchase-card {
+    width:50%;
+}
+
+
+tr td.index-price{
+    text-align: right !important;
+}
+
+
+.totalcost-content-cards {
+    display: flex; 
+    width: 100%;
+}
+
+.totalcost-content-card {
+    width: 100%;
+}
+
+.totalcost-content-card input {
+    text-align: right !important;
+}
+
+.content-cards {
+    display: flex; 
+    width: 100%;
+}
+
+.content-card {
+    width: 100%;
+}
+
+.card-footer {
+    display: flex; 
+}
+
+.cost-date-cards {
+    display: flex; 
+    width: 100%;
+}
+
+.cost-date-card {
+    width: 100%;
+}
+
+.sales-item-search {
+    width:80%; 
+    margin: auto;
+}
+
+.new-content-cards {
+    display: flex; 
+    float: right;
+   
+}
+
+.itemCount {
+    float: right;
+}
+
+/* 販売管理画面のCSS */
+/* .sales-result-price {
+    text-align: right
+} */
+
+/* 会員登録とログイン画面のCSS */
+.register-form {
+    width: 70% !important;
+}
+
+.login-form {
+    width: 70% !important;
+}
+
+
+/* 販売登録、仕入登録画面のCSS */
+input.sesrch-input{
+    width: 20rem;
+    height:1.9rem;
+}
+

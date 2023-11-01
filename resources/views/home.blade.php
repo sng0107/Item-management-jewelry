@@ -3,11 +3,14 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1 class="text-center mt-5">Welcome to the product management system.</h1>
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+<div class="text-center mt-2">
+        <p>ようこそ、商品管理システムへ。<br>サイドバーのメニューをクリックしてシステムをご利用ください。</p>
+        <!-- <img src="{{asset('storage/images/home_2_img.jpg')}}" alt="HOME IMAGE" class="mt-2" style="width:60%;"> -->
+</div>
 @stop
 
 @section('css')
