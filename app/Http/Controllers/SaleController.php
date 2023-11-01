@@ -327,7 +327,6 @@ public function rank(Request $request)
     ->groupBy('item_id')
     ->orderBy('total_sales', 'desc');
 
-
     // 検索フォームからキーワードを取得
     $search = $request->input('search');
 
@@ -340,8 +339,6 @@ public function rank(Request $request)
         });
     }
 
-    // ページネーションを適用
-    //$totalSales = $totalSales->paginate(10)->withQueryString();
     $totalSales = $totalSales->get();
 
     return view('sale.salesRank',compact('totalSales','itemCount'));

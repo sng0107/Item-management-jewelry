@@ -251,6 +251,77 @@ public function update(Request $request,$id)
 
 
 /**
+ * 複製画面表示
+ * 
+ */
+public function clone($id)
+{
+    // DBから該当するレコードを取得
+    $purchase = Purchase::findOrFail($id);
+    
+    return view('purchase.purchaseCopy', compact('purchase'));
+}
+
+
+/**
+ * 複製登録処理を実行
+ */
+public function cloneCreate(Request $request,$id)
+{
+    // DBから該当するレコードを取得
+    $purchase = Purchase::with('item')->find($id);
+
+    // プルダウンの表示用
+    $suppliers = Supplier::get();    
+
+
+    //バリデーションチェック
+    $validate = [  
+        'purchase_price' => 'required|numeric',
+        'purchase_date' => 'required|max:20',
+        'purchase_quantity' => 'required|numeric',
+        'staff' => 'nullable|max:20',
+        'comment' => 'nullable|max:500',
+        
+    ];
+    // バリデーションエラーメッセージ
+     $errors = [
+        'purchase_price.required' => '必須項目です。',
+        'purchase_price.numeric' => '数字を入力してください。',
+        'purchase_date.required' => '必須項目です。',
+        'purchase_date.max' => '20文字以内で入力してください。',
+        'purchase_quantity.required' => '必須項目です。',
+        'purchase_quantity.numeric' => '数字を入力してください。',
+        'staff.max' => '20文字以内で入力してください。',
+        'comment.max' => '500文字以内で入力してください。',
+    ];
+
+    // 定義に沿ってバリデーションを実行
+     $request->validate($validate , $errors);
+  
+    // バリエーションエラーがなければDBに保存
+    $purchase = new Purchase([
+        'user_id' => Auth::id(),
+        'item_id' => $purchase->item_id,
+        'purchase_price' => $request->input('purchase_price'),
+        'purchase_date' => $request->input('purchase_date'),
+        'purchase_quantity' => $request->input('purchase_quantity'),
+        'staff'=> '未設定',
+        'comment'=> $request->input('comment'),
+    ]);
+
+    $purchase->save();
+
+    // 在庫数を更新
+    $purchase->item->increment('stock', $request->input('purchase_quantity'));
+
+    return redirect()->route('purchases.index')->with('flash_message', '複製から商品が登録されました。');
+}
+
+
+
+
+/**
  * 削除処理を実行
  * 
  */

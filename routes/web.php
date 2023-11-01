@@ -120,26 +120,28 @@ Route::group(['middleware' => ['auth','can:管理者']],function(){
 
         // purchasesから始まるURLのグループ
          Route::prefix('purchases')->group(function () {
-            //検索画面表示
+            //　検索画面表示
             Route::get('/', [App\Http\Controllers\PurchaseController::class, 'index'])->name('purchases.index');
-            //検索画面表示
+            //　検索画面表示
             Route::get('/search', [App\Http\Controllers\PurchaseController::class, 'showSearch'])->name('purchases.search');
-            //検索結果画面表示
+            //　検索結果画面表示
             Route::get('/add', [App\Http\Controllers\PurchaseController::class, 'searchResult']);
-            //登録画面表示
+            //　登録画面表示
             Route::get('/count/{id}', [App\Http\Controllers\PurchaseController::class, 'create']);
-            //登録処理実行
+            //　登録処理実行
             Route::post('/count/{id}', [App\Http\Controllers\PurchaseController::class, 'store']);
-            //詳細画面表示
+            //　詳細画面表示
             Route::get('/detail/{id}', [App\Http\Controllers\PurchaseController::class, 'detail']);
-            //編集画面表示
+            //　編集画面表示
             Route::get('/edit/{id}', [App\Http\Controllers\PurchaseController::class, 'edit']);
-            //編集処理実行
+            //　編集処理実行
             Route::post('/edit/{id}', [App\Http\Controllers\PurchaseController::class, 'update']);
-            //編集処理実行
+            // 複製画面表示
+            Route::get('/clone/{id}', [App\Http\Controllers\PurchaseController::class, 'clone']);
+            // 複製登録処理実行
+            Route::post('/clone/{id}', [App\Http\Controllers\PurchaseController::class, 'cloneCreate']);
+            //　削除処理実行
             Route::post('/delete/{id}', [App\Http\Controllers\PurchaseController::class, 'destroy']);
-
-
         });
         
 

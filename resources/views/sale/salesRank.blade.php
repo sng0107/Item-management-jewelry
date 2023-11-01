@@ -54,23 +54,35 @@
                     <th>在庫数<br>　</th>
                 </tr>
             </thead>
-    
             <tbody>
-                @foreach ($totalSales as $key => $sale) 
+                @php
+                    $sameRank = null;
+                    $rank = 0;
+                @endphp
+                    @foreach ($totalSales as $key => $sale) 
+                @php
+                    // 現在の販売数と前の商品の販売数が同じ場合、同じ順位を保持
+                    if ($sameRank !== null && $sale->total_sales === $sameRank) {
+                        $rank--;
+                    }
+                    $rank++;
+                @endphp
                     <tr>
                         <!-- 順位を表示 -->
-                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $rank}}</td>
                         <td>{{ $sale->item->item_code }}</td>
                         <td>{{ $sale->item->item_name }}</td>
                         <td class="">{{ number_format($sale->item->retail_price) }}</td>
                         <td class="">{{ number_format($sale->total_sales) }}</td>
                         <td>{{ $sale->item->stock }}</td>
                     </tr>
+                    @php
+                        $sameRank = $sale->total_sales;
+                    @endphp
                 @endforeach
             </tbody>
         </table>
     </div>
-    
 </div>
 
 @stop

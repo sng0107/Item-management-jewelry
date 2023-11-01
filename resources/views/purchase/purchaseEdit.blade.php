@@ -80,17 +80,11 @@
             </div>
 
             <div class="form-group" >
-                <label for="supplier" class="mb-0">仕入先</label>
-                <select class="form-control input-size" name="supplier" id="supplier">
-                    @foreach ($suppliers as $supplier)     
-                        @if ($purchase->item->supplier_id == $supplier->id)
-                            <option value="{{ $purchase->item->supplier->id }}" selected>{{ $purchase->item->supplier->supplier_name }}</option>
-                        @else
-                            <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
-                        @endif
-                    @endforeach
-                </select>
-                @error('supplier')
+                <label for="supplier_id" class="mb-0">仕入先</label>
+                @if ($purchase->item->supplier_id)
+                        <input readonly type="text" class="form-control input-size" id="type" name="supplier_id" value="{{ $purchase->item->supplier->supplier_name }}">
+                    @endif
+                @error('supplier_id')
                 <div class="text-danger error-font-size">{{ $message }}</div>
                 @enderror
             </div>
