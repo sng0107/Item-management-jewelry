@@ -153,12 +153,12 @@ class TypeController extends Controller
              
         if(!isset($item))
         {
-        // レコードを削除
+        //アイテムで使用されていなければ削除できる
         $type->delete();
         
         return redirect()->route('categories.typeIndex')->with('flash_message', 'アイテムが削除されました。');
         }else{
-
+            //アイテムで使用されていたら削除できない
             return redirect()->route('categories.typeIndex')->with('flash_message',  '他のデータで使用されています。削除出来ません。');
         }
 
