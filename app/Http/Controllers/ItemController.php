@@ -34,7 +34,7 @@ class ItemController extends Controller
         // DBからレコードを取得
         $items = Item::query(); 
         // アイテム名表示用
-        $types = Type::All();
+        $types = Type::all();
 
         // 検索フォームからキーワードを取得
         $search = $request->input('search');
@@ -63,8 +63,8 @@ class ItemController extends Controller
     public function create()
     {
         // DBからレコードを取得（プルダウンに表示させるため）
-        $types = Type::All();
-        $suppliers = Supplier::All();
+        $types = Type::all();
+        $suppliers = Supplier::all();
 
         return view('item.itemAdd',compact('types','suppliers'));
     }
@@ -182,8 +182,8 @@ class ItemController extends Controller
         $item = Item::findOrFail($id);
     
         // ルダウンの表示用
-        $types = Type::All();
-        $suppliers = Supplier::All();
+        $types = Type::all();
+        $suppliers = Supplier::all();
         
         return view('item.itemEdit', compact('item','types','suppliers'));
     }
@@ -285,8 +285,8 @@ public function clone($id)
     $item = Item::findOrFail($id);
 
     // プルダウン表示用
-    $types = Type::All();
-    $suppliers = Supplier::All();
+    $types = Type::all();
+    $suppliers = Supplier::all();
     
     return view('item.itemCopy', compact('item','types' ,'suppliers'));
 }
