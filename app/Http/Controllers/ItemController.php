@@ -238,7 +238,7 @@ class ItemController extends Controller
             $image = file_get_contents($request->img);
             $encoded_image = base64_encode($image);
 
-            // 編集内容を登録（item_codeは更新不可なので記載せず)
+            // 編集内容を登録
             $item->update([
                 'user_id' => Auth::id(),
                 'type_id' => $request->type_id,
