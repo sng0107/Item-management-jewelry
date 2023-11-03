@@ -327,16 +327,15 @@ public function rank(Request $request)
 
     // ランキング作成(販売数0も表示される)
     $totalSales = Sale::rightJoin('items', 'sales.item_id', '=', 'items.id')
-    ->select('items.id', 'items.item_code', 'items.item_name','items.stock')
+    ->select('items.id', 'items.item_code', 'items.item_name','items.stock','items.retail_price')
     ->selectRaw('COALESCE(SUM(sales.sale_quantity), 0) as total_sales')
-    ->groupBy('items.id', 'items.item_code', 'items.item_name','items.stock')
+    ->groupBy('items.id', 'items.item_code', 'items.item_name','items.stock','items.retail_price')
     ->orderBy('total_sales', 'desc');
-
 
     // 検索フォームからキーワードと期間を取得
     $search = $request->input('search');
-    $dayFrom = $request->input('dayFromSearch');
-    $dayTo = $request->input('dayToSearch');
+    $dayFrom = $request->input('dayFrom');
+    $dayTo = $request->input('dayTo');
 
     // 商品キーワード検索のみ入力された場合の検索結果を取得 
     if (!empty($search && $dayFrom==null && $dayTo==null)) {
@@ -360,8 +359,8 @@ public function rank(Request $request)
  
     // 商品と期間の両方を使った検索結果を取得
     // $today = date("Y-m-d");
-    $dayFrom = $request->input('dayFromSearch');
-    $dayTo = $request->input('dayToSearch');
+    // $dayFrom = $request->input('dayFromSearch');
+    // $dayTo = $request->input('dayToSearch');
 
     if(!empty($search) && !empty($dayFrom) && !empty($dayTo)) {
         // 日付範囲の検索条件を設定

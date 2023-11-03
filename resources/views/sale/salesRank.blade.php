@@ -26,8 +26,8 @@
     <form method="GET" action="{{ url('sales/rank') }}" class="mt-3">
         <p class="mb-0">販売期間絞り込み</p>
         @csrf
-        <input type="date"  class="sesrch-input input-size"  name="dayFromSearch" value="{{request('dayFromSearch')}}">~
-        <input type="date"  class="sesrch-input input-size"  name="dayToSearch" value="{{request('dayToSearch')}}">
+        <input type="date"  class="sesrch-input input-size"  name="dayFrom" value="{{request('dayFrom')}}">~
+        <input type="date"  class="sesrch-input input-size"  name="dayTo" value="{{request('dayTo')}}">
         <button type="submit" class="btn btn-secondary btn-sm mb-2 search-btn">検索</button> 
             <!--検索クリアボタン -->
             <a href="{{ url('sales/rank') }}" class="btn btn-secondary btn-sm mb-2 search-clear-btn">検索クリア</a>
@@ -82,7 +82,7 @@
                         <td>{{ $rank}}</td>
                         <td>{{ $sale->item_code }}</td>
                         <td>{{ $sale->item_name }}</td>
-                        <td class="">{{ number_format($sale->item->retail_price) }}</td>
+                        <td class="">{{ number_format($sale->retail_price) }}</td>
                         <td class="">{{ number_format($sale->total_sales) }}</td>
                         <td>{{ $sale->stock }}</td>
                     </tr>
