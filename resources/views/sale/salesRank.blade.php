@@ -82,7 +82,7 @@
                         <td>{{ $rank}}</td>
                         <td>{{ $sale->item_code }}</td>
                         <td>{{ $sale->item_name }}</td>
-                        <td class="">{{ number_format($sale->retail_price) }}</td>
+                        <td class="">{{ number_format($sale->item->retail_price) }}</td>
                         <td class="">{{ number_format($sale->total_sales) }}</td>
                         <td>{{ $sale->stock }}</td>
                     </tr>
