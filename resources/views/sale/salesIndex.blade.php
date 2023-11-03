@@ -49,7 +49,7 @@
                 <tr>
                     <th class="index-title ">行No,<br>　</th>
                     <th hidden>販売No,<br>　</th>
-                    <th hidden>登録処理日<br>　</th>
+                    <th>更新日<br>　</th>
                     <th>販売日<br>　</th>
                     <th>商品コード<br>　</th>
                     <th>商品名<br>　</th>
@@ -68,7 +68,7 @@
                     <tr>
                         <!-- 行番号を表示 -->
                         <td>{{ ($sales->currentPage() - 1) * $sales->perPage() + $loop->iteration }}</td> 
-                        <td hidden>{{ $sale->created_at ->format('Y-m-d') }}</td>
+                        <td>{{ $sale->created_at ->format('Y-m-d') }}</td>
                         <td>{{ $sale->sale_date }}</td>
                         <td>{{ $sale->item->item_code }}</td>
                         <td>{{ $sale->item->item_name }}</td>
