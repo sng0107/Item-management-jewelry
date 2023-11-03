@@ -87,7 +87,7 @@ public function searchResult(Request $request)
 
             // キーワードは入力された。itemsDBにはtableが存在する。しかし該当する結果がなかった場合
             if ($items->isEmpty()) {
-                return view('purchase.purchasesearchResult');
+                return view('purchase.purchaseSearchResult');
             }
 
         return view('purchase.purchaseSearchResult', compact('items'));
