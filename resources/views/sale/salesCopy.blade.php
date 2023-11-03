@@ -21,8 +21,8 @@
                 <div class="sales-cards">
                     <div class="sales-card  me-1">
                         <div class="form-group" >
-                            <label for="sale_date" class="mb-0">販売日( 例 2023/01/01 )<span class="text-danger">　(必須)</span></label>
-                            <input type="text" class="form-control input-size" id="sale_date" name="sale_date"  value="{{ old('sale_date',$sale->sale_date) }}">
+                            <label for="sale_date" class="mb-0">販売日<span class="text-danger">　(必須)</span></label>
+                            <input type="date" class="form-control input-size" id="sale_date" name="sale_date"  value="{{ old('sale_date',$sale->sale_date) }}">
                             @error('sale_date')
                             <div class="text-danger error-font-size">{{ $message }}</div>
                             @enderror

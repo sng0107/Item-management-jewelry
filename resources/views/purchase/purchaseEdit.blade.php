@@ -21,8 +21,8 @@
             <div class="sales-cards">
                 <div class="sales-card me-1">
                     <div class="form-group" >
-                        <label for="purchase_date" class="mb-0">納品書日付( 例 2023/01/01 )</label>
-                        <input type="text" class="form-control input-size" id="purchase_date" name="purchase_date"  value="{{ $purchase->purchase_date }}">
+                        <label for="purchase_date" class="mb-0">納品書日付</label>
+                        <input type="date" class="form-control input-size" id="purchase_date" name="purchase_date"  value="{{ $purchase->purchase_date }}">
                         @error('purchase_date')
                         <div class="text-danger error-font-size">{{ $message }}</div>
                         @enderror
@@ -31,7 +31,7 @@
                 <div class="sales-card ms-1">
                     <div class="form-group" >
                         <label for="created_at" class="mb-0">更新日<span class="text-primary">　※自動更新</span></label>
-                        <input readonly type="text" class="form-control input-size" id="created_at" name="created_at"  value="{{ $purchase->created_at->format('Y/m/d') }}">
+                        <input readonly type="text" class="form-control input-size" id="created_at" name="created_at"  value="{{ $purchase->created_at->format('Y-m-d') }}">
                         @error('created_at')
                         <div class="text-danger error-font-size">{{ $message }}</div>
                         @enderror

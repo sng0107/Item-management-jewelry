@@ -59,7 +59,7 @@
                         <!-- 行番号を表示 -->
                         <td>{{ ($purchases->currentPage() - 1) * $purchases->perPage() + $loop->iteration }}</td> 
                         <td hidden>{{ $purchase->id }}</td>
-                        <td>{{ $purchase->updated_at->format('Y/m/d') }}</td>
+                        <td>{{ $purchase->updated_at->format('Y-m-d') }}</td>
                         <td>{{ $purchase->purchase_date }}</td>
                         <td>{{ $purchase->item->item_code }}</td>
                         <td>{{ $purchase->item->item_name }}</td>

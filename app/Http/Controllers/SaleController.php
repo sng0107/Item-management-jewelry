@@ -311,8 +311,6 @@ public function cloneCreate(Request $request,$id)
 }
 
 
-
-
 /**
 * ランキング画面表示
 *
@@ -322,24 +320,66 @@ public function rank(Request $request)
     // アイテムテーブルからすべての品番を取得
     $itemCount = Item::count();
 
-    // ランキング作成
-    $totalSales = Sale::with('item')->select('item_id', DB::raw('SUM(sale_quantity) as total_sales'))
-    ->groupBy('item_id')
+    // ランキング作成(販売数0だと表示されない)
+    // $totalSales = Sale::with('item')->select('item_id', DB::raw('SUM(sale_quantity) as total_sales'))
+    // ->groupBy('item_id')
+    // ->orderBy('total_sales', 'desc');
+
+    // ランキング作成(販売数0も表示される)
+    $totalSales = Sale::rightJoin('items', 'sales.item_id', '=', 'items.id')
+    ->select('items.id', 'items.item_code', 'items.item_name','items.stock')
+    ->selectRaw('COALESCE(SUM(sales.sale_quantity), 0) as total_sales')
+    ->groupBy('items.id', 'items.item_code', 'items.item_name','items.stock')
     ->orderBy('total_sales', 'desc');
 
-    // 検索フォームからキーワードを取得
-    $search = $request->input('search');
 
-    if (!empty($search)) {
+    // 検索フォームからキーワードと期間を取得
+    $search = $request->input('search');
+    $dayFrom = $request->input('dayFromSearch');
+    $dayTo = $request->input('dayToSearch');
+
+    // 商品キーワード検索のみ入力された場合の検索結果を取得 
+    if (!empty($search && $dayFrom==null && $dayTo==null)) {
+        // キーワードの検索条件を設定
         $totalSales->where(function($query) use ($search) {
             $query->whereHas('item', function ($query) use ($search) {
                 $query->where('item_code', 'like', "%{$search}%")
                     ->orWhere('item_name', 'like', "%{$search}%");
             });
         });
+        // 販売数が0でも検索結果を表示
+        $totalSales->orWhereDoesntHave('item');
+    
+    }
+
+    // 集計期間のみ検索入力された場合の検索結果を取得
+    if($search==null && !empty($dayFrom) && !empty($dayTo)) {
+        // 販売期間の検索条件を設定
+        $totalSales->whereBetween('sale_date', [$dayFrom, $dayTo]);
+    }
+ 
+    // 商品と期間の両方を使った検索結果を取得
+    // $today = date("Y/m/d");
+    $dayFrom = $request->input('dayFromSearch');
+    $dayTo = $request->input('dayToSearch');
+
+    if(!empty($search) && !empty($dayFrom) && !empty($dayTo)) {
+        // 日付範囲の検索条件を設定
+        $totalSales->where(function($query) use ($search,$dayFrom,$dayTo) 
+        {
+            $query->whereHas('item', function ($query) use ($search) {
+                $query->where('item_code', 'like', "%{$search}%")
+                    ->orWhere('item_name', 'like', "%{$search}%");
+            })
+                ->whereBetween('sale_date', [$dayFrom, $dayTo]);
+          
+        });
     }
 
     $totalSales = $totalSales->get();
+
+    //dd($request->all());
+    //dd($totalSales);
 
     return view('sale.salesRank',compact('totalSales','itemCount'));
 

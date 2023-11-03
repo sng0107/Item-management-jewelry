@@ -21,8 +21,8 @@
             <div class="purchase-cards">
                 <div class="purchase-card me-1">
                     <div class="form-group" >
-                        <label for="purchase_date" class="mb-0">納品書日付( 例 2023/01/01 )<span class="text-danger">　(必須)</span></label>
-                        <input type="text" class="form-control input-size" id="purchase_date" name="purchase_date"  value="{{ old('purchase_date') }}">
+                        <label for="purchase_date" class="mb-0">納品書日付<span class="text-danger">　(必須)</span></label>
+                        <input type="date" class="form-control input-size" id="purchase_date" name="purchase_date"  value="{{ old('purchase_date') }}">
                         @error('purchase_date')
                         <div class="text-danger error-font-size">{{ $message }}</div>
                         @enderror

@@ -10,25 +10,33 @@
 <div class="new-content-cards me-1">
     <!-- 販売履歴画面への遷移ボタン -->
     <div class="text-right new-add-btn">
-    <a href="{{url()->previous()}}" class="btn btn-secondary mb-2 btn-sm back-btn">一覧に戻る</a>
+    <a href="{{url('/sales')}}" class="btn btn-secondary mb-2 btn-sm back-btn">一覧に戻る</a>
     </div>
 </div> 
 
-<!-- 検索フォームエリア -->
+<!-- 商品検索フォームエリア -->
 <div class="content-body" >
     <form method="GET" action="{{ url('sales/rank') }}" class="mt-3">
+        <p class="mb-0">商品絞り込み</p>
         @csrf
         <input type="search" placeholder="商品コード/商品名" class="sesrch-input input-size"  name="search" value="{{request('search')}}">
+
+<!-- 集計期間検索フォームエリア -->
+<div class="content-body" >
+    <form method="GET" action="{{ url('sales/rank') }}" class="mt-3">
+        <p class="mb-0">販売期間絞り込み</p>
+        @csrf
+        <input type="date"  class="sesrch-input input-size"  name="dayFromSearch" value="{{request('dayFromSearch')}}">~
+        <input type="date"  class="sesrch-input input-size"  name="dayToSearch" value="{{request('dayToSearch')}}">
         <button type="submit" class="btn btn-secondary btn-sm mb-2 search-btn">検索</button> 
             <!--検索クリアボタン -->
             <a href="{{ url('sales/rank') }}" class="btn btn-secondary btn-sm mb-2 search-clear-btn">検索クリア</a>
     </form>
 </div>  
- 
 
 <!-- 品番数表示エリア -->
 <div class="itemCount">
-    <p>ランキングの品番数は全部で{{$itemCount}}品番です</p>
+    <p>※集計対象は全部で{{$itemCount}}品番です</p>
 </div>
 
 <!-- フラッシュメッセージ -->
@@ -41,6 +49,8 @@
     </div>
 @endif
 
+
+
     <!-- 商品一覧表示エリア -->
     <div class="card-body table-responsive p-0 mt-3" style="width:100%;" >
         <table class="table table-hover text-nowrap">
@@ -50,8 +60,8 @@
                     <th>商品コード<br>　</th>
                     <th>商品名<br>　</th>
                     <th>販売単価<br>(税込)</th>
-                    <th>販売数<br>　</th>
-                    <th>在庫数<br>　</th>
+                    <th>販売数<br>(合計)</th>
+                    <th>在庫数<br>(現在)</th>
                 </tr>
             </thead>
             <tbody>
@@ -70,11 +80,11 @@
                     <tr>
                         <!-- 順位を表示 -->
                         <td>{{ $rank}}</td>
-                        <td>{{ $sale->item->item_code }}</td>
-                        <td>{{ $sale->item->item_name }}</td>
-                        <td class="">{{ number_format($sale->item->retail_price) }}</td>
+                        <td>{{ $sale->item_code }}</td>
+                        <td>{{ $sale->item_name }}</td>
+                        <td class="">{{ number_format($sale->retail_price) }}</td>
                         <td class="">{{ number_format($sale->total_sales) }}</td>
-                        <td>{{ $sale->item->stock }}</td>
+                        <td>{{ $sale->stock }}</td>
                     </tr>
                     @php
                         $sameRank = $sale->total_sales;

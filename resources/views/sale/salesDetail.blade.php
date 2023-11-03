@@ -27,7 +27,7 @@
             <div class="sales-card ms-1">
                 <div class="form-group" >
                     <label for="updated_at" class="mb-0">更新日</label>
-                    <input readonly type="text" class="form-control input-size" id="update_at" name="updated_at"  value="{{ $sale->updated_at -> format('Y/m/d')}}">
+                    <input readonly type="text" class="form-control input-size" id="update_at" name="updated_at"  value="{{ $sale->updated_at -> format('Y-m-d')}}">
                 </div>
             </div>            
         </div>
