@@ -79,7 +79,7 @@
                     <!-- 編集ボタン -->
                     <td class="align-middle"><a href="/costs/edit/{{ $cost->id }}" class="btn btn-secondary btn-sm edit-btn">編集</a></td>
                     <!-- 商品詳細へのリンクボタン -->
-                    <td class="align-middle "><a href="/items/detail/{{ $cost->id }}" class="btn btn-success btn-sm me-1 detail-btn">商品</a></td>
+                    <td class="align-middle "><a href="/items/detail/{{ $cost->item_id }}" class="btn btn-success btn-sm me-1 detail-btn">商品</a></td>
 
             @endforeach
         </tbody>

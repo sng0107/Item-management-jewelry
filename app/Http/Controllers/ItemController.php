@@ -31,10 +31,8 @@ class ItemController extends Controller
  */
     public function index(Request $request)
     {
-        // DBからレコードを取得
-        $items = Item::query(); 
-        // アイテム名表示用
-        $types = Type::all();
+        // リレーションを事前に取得
+        $items = Item::with('cost'); 
 
         // 検索フォームからキーワードを取得
         $search = $request->input('search');
@@ -52,7 +50,7 @@ class ItemController extends Controller
         ->paginate(5)
         ->withQueryString();
     
-        return view('item.itemIndex', compact('items','types'));
+        return view('item.itemIndex', compact('items'));
     }
 
 

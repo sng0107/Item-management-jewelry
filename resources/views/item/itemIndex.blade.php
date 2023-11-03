@@ -92,7 +92,7 @@
                         <!-- 編集ボタン -->
                         <td class="align-middle"><a href="/items/edit/{{ $item->id }}" class="btn btn-secondary btn-sm edit-btn">編集</a></td>
                         <!-- コスト詳細表示ボタン -->
-                        <td class="align-middle"><a href="/costs/detail/{{ $item->id }}" class="btn btn-success btn-sm edit-btn">コスト</a></td>
+                        <td class="align-middle"><a href="/costs/detail/{{ $item->cost->id }}" class="btn btn-success btn-sm edit-btn">コスト</a></td>
                         @endcan
                     </tr>
                 @endforeach
