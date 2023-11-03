@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('costs', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('item_id')->unsigned();
             $table->integer('metal_cost')->default('0');
             $table->integer('chain_cost')->default('0');

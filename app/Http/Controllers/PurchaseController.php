@@ -63,7 +63,7 @@ public function index(Request $request)
  */
 public function showSearch(Request $request)
 {
-return view('purchase.purchasesearch');
+return view('purchase.purchaseSearch');
 }
 
 
@@ -90,7 +90,7 @@ public function searchResult(Request $request)
                 return view('purchase.purchasesearchResult');
             }
 
-        return view('purchase.purchasesearchResult', compact('items'));
+        return view('purchase.purchaseSearchResult', compact('items'));
 
     }else{
         // キーワードが空の場合
