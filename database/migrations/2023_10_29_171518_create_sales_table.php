@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('item_id')->unsigned();
-            $table->integer('selse_price')->comment('実際の販売価格');
+            $table->integer('sale_price')->comment('実際の販売価格');
             $table->integer('sale_quantity')->default('0');
             $table->string('sale_date',20);
             $table->string('customer',20)->nullable();
