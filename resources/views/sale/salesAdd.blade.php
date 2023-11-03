@@ -57,7 +57,7 @@
 
                 <div class="form-group" >
                     <label for="sale_price" class="mb-0">販売単価<span class="text-primary">　※実際の販売単価を入力してください。</span></label>
-                    <input type="text" class="form-control input-size" id="sale_price" name="sale_price" value="{{ $item->retail_price }}">
+                    <input type="text" class="form-control input-size" id="sale_price" name="sale_price" value="{{ old('sale_price',$item->retail_price) }}">
                     @error('sale_price')
                         <div class="text-danger error-font-size">{{ $message }}</div>
                     @enderror
