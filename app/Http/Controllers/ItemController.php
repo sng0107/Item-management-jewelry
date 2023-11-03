@@ -48,7 +48,7 @@ class ItemController extends Controller
         }
 
         //商品コード順に表示(古い品番順)
-        $items = $items->orderBy('item_code', 'asc') // 品番全体を昇順にソート
+        $items = $items->orderBy('item_code', 'asc')  // 品番全体を昇順にソート
         ->paginate(5)
         ->withQueryString();
     
