@@ -68,7 +68,7 @@
                     <tr>
                         <!-- 行番号を表示 -->
                         <td>{{ ($sales->currentPage() - 1) * $sales->perPage() + $loop->iteration }}</td> 
-                        <td hidden>{{ $sale->created_at ->format('Y/m/d') }}</td>
+                        <td hidden>{{ $sale->created_at ->format('Y-m-d') }}</td>
                         <td>{{ $sale->sale_date }}</td>
                         <td>{{ $sale->item->item_code }}</td>
                         <td>{{ $sale->item->item_name }}</td>

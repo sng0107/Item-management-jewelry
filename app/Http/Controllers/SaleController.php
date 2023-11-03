@@ -359,7 +359,7 @@ public function rank(Request $request)
     }
  
     // 商品と期間の両方を使った検索結果を取得
-    // $today = date("Y/m/d");
+    // $today = date("Y-m-d");
     $dayFrom = $request->input('dayFromSearch');
     $dayTo = $request->input('dayToSearch');
 

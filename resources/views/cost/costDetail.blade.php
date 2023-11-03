@@ -114,13 +114,13 @@
                     <div class="cost-date-card me-1">
                         <div class="form-group" >
                             <label for="created_at" class="mb-0">登録日時</label>
-                            <input type="text" class="form-control input-size" id="created_at" name="created_at" value="{{ $cost->created_at ->format('Y/m/d　H:d') }}">
+                            <input type="text" class="form-control input-size" id="created_at" name="created_at" value="{{ $cost->created_at ->format('Y-m-d　H:d') }}">
                         </div>
                     </div>
                     <div class="cost-date-card ms-1">
                         <div class="form-group" >
                             <label for="updated_at" class="mb-0">更新日時</label>
-                            <input type="text" class="form-control input-size" id="updated_at" name="updated_at" value="{{ $cost->updated_at ->format('Y/m/d　H:d') }}">
+                            <input type="text" class="form-control input-size" id="updated_at" name="updated_at" value="{{ $cost->updated_at ->format('Y-m-d　H:d') }}">
                         </div>
                     </div>   
                     <div class="cost-date-card ms-1">
