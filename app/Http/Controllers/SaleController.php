@@ -331,7 +331,7 @@ public function rank(Request $request)
     ->selectRaw('COALESCE(SUM(sales.sale_quantity), 0) as total_sales')
     ->groupBy('items.id', 'items.item_code', 'items.item_name','items.stock','items.retail_price')
     ->orderBy('total_sales', 'desc');
-
+    
     // 検索フォームからキーワードと期間を取得
     $search = $request->input('search');
     $dayFrom = $request->input('dayFrom');
@@ -346,8 +346,9 @@ public function rank(Request $request)
                     ->orWhere('item_name', 'like', "%{$search}%");
             });
         });
-        // 販売数が0でも検索結果を表示
-        $totalSales->orWhereDoesntHave('item');
+        // 販売数が0でも検索結果を表示しようとしたが、　
+        // 該当する結果がない場合に販売数0の商品が表示されてしまうのでコメントアウト
+        //$totalSales->orWhereDoesntHave('item');
     
     }
 
@@ -355,13 +356,10 @@ public function rank(Request $request)
     if($search==null && !empty($dayFrom) && !empty($dayTo)) {
         // 販売期間の検索条件を設定
         $totalSales->whereBetween('sale_date', [$dayFrom, $dayTo]);
+
     }
  
-    // 商品と期間の両方を使った検索結果を取得
-    // $today = date("Y-m-d");
-    // $dayFrom = $request->input('dayFromSearch');
-    // $dayTo = $request->input('dayToSearch');
-
+    // 商品と期間の両方に該当する結果を取得
     if(!empty($search) && !empty($dayFrom) && !empty($dayTo)) {
         // 日付範囲の検索条件を設定
         $totalSales->where(function($query) use ($search,$dayFrom,$dayTo) 
