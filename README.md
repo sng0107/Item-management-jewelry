@@ -43,4 +43,20 @@ MySQL 8.0.33<br>
  パスワード：passhanako<br>
   <br>
 
- 
+  ### 設計書
+[要件定義書へ](https://docs.google.com/spreadsheets/d/1MeVT5cFsah50Wjga1CYKea-lqT_jyC0Y/edit?usp=drive_link&ouid=108485214149000783490&rtpof=true&sd=true) <br>
+
+[基本設定書へ](https://docs.google.com/spreadsheets/d/10_lEbWIfzfzfDTbiZ3IyBJc4S6wWNR-M/edit?usp=drive_link&ouid=108485214149000783490&rtpof=true&sd=true) <br>
+
+[画面設計書へ](https://docs.google.com/spreadsheets/d/1ls85ZL-ImfFuPhX2PHPLkhNFJE6O5Rh0/edit?usp=drive_link&ouid=108485214149000783490&rtpof=true&sd=true) <br>
+
+[データベース定義書へ](https://docs.google.com/spreadsheets/d/1HdbZCDmowY-ADKmObGLty-DFVwwbPK0m/edit?usp=drive_link&ouid=108485214149000783490&rtpof=true&sd=true) <br>
+
+[テスト仕様書兼報告書へ](https://docs.google.com/spreadsheets/d/16VxNq75FlMKp4HlZ80OcLO7g5ajFtIQ0/edit?usp=drive_link&ouid=108485214149000783490&rtpof=true&sd=true) <br>
+
+
+
+
+
+
+
