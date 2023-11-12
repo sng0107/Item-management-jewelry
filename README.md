@@ -35,7 +35,7 @@ MySQL 8.0.33<br>
 
  ### テストデータ
  店舗アカウント<br>
-メールアドレス：suzuki@exsample.com<br>
+メールアドレス：suzuki@example.com<br>
 パスワード：passsuzuki<br>
 <br>
  本部アカウント<br>
