@@ -18,19 +18,18 @@
         @csrf
         <div class="card-body">
             <div class="form-group">
-            <label for="supplier_code" class="mb-0">仕入先コード</label>
-                <input readonly type="text" class="form-control input-size" id="supplier_code" name="supplier_code" value="{{ $supplier->supplier_code }}">
-            @error('supplier_code')
-                <div class="text-danger error-font-size">{{ $message }}</div>
-            @enderror
+                <label for="supplier_code" class="mb-0">仕入先コード</label>
+                    <input readonly type="text" class="form-control input-size" id="supplier_code" name="supplier_code" value="{{ $supplier->supplier_code }}">
+                        @error('supplier_code')
+                            <div class="text-danger error-font-size">{{ $message }}</div>
+                        @enderror
             </div>
-
             <div class="form-group">
-            <label for="supplier_name" class="mb-0">仕入先名(20文字以内)</label>
-                <input type="text" class="form-control input-size" id="supplier_name" name="supplier_name" value="{{  $supplier->supplier_name }}">
-                @error('supplier_name')
-                    <div class="text-danger error-font-size">{{ $message }}</div>
-                @enderror
+                <label for="supplier_name" class="mb-0">仕入先名(20文字以内)</label>
+                    <input type="text" class="form-control input-size" id="supplier_name" name="supplier_name" value="{{  $supplier->supplier_name }}">
+                        @error('supplier_name')
+                            <div class="text-danger error-font-size">{{ $message }}</div>
+                        @enderror
             </div>
         </div>
 

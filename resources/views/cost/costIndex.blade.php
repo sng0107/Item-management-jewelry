@@ -73,14 +73,12 @@
                     <td >{{ $cost->cost_rate }}</td> 
                     <td >{{ $cost->item->supplier->supplier_name }}</td>
                     
-                    
                     <!-- 詳細ボタン -->
                     <td class="align-middle "><a href="/costs/detail/{{ $cost->id }}" class="btn btn-secondary btn-sm me-1 detail-btn">詳細</a></td>
                     <!-- 編集ボタン -->
                     <td class="align-middle"><a href="/costs/edit/{{ $cost->id }}" class="btn btn-secondary btn-sm edit-btn">編集</a></td>
                     <!-- 商品詳細へのリンクボタン -->
                     <td class="align-middle "><a href="/items/detail/{{ $cost->item_id }}" class="btn btn-success btn-sm me-1 detail-btn">商品</a></td>
-
             @endforeach
         </tbody>
     </table>
@@ -90,7 +88,6 @@
     <div class="pagination justify-content-center mt-3 pagination-sm" >
         {{ $costs->links('pagination::bootstrap-4') }}
     </div>
-          
 @stop
 
 @section('css')

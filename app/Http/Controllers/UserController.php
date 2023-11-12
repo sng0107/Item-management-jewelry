@@ -12,7 +12,6 @@ class UserController extends Controller
 
 /**
  * 一覧表示
- * 
  */
     public function userIndex(Request $request)
     {
@@ -22,20 +21,19 @@ class UserController extends Controller
             1 => '管理者',
         ];
 
-        // DBからレコードを取得
+        //DBからレコードを取得
         $users = User::query(); 
 
-        // 検索フォームからキーワードを取得
+        //検索フォームからキーワードを取得
         $search = $request->input('search');
 
-        // 検索条件を追加
+        //検索条件を追加
         if (!empty($search))
         {
             $users->where('staff_number', 'like', "%{$search}%")
             ->orWhere('name', 'like', "%{$search}%");
         }
 
-        //$users = $users->paginate(10);
         //社員番号順に表示
         $users = $users->orderBy('staff_number', 'asc')->paginate(10)->withQueryString();
         
@@ -44,7 +42,6 @@ class UserController extends Controller
 
 /**
  * 編集画面表示
- * 
  */
     public function userShowEdit($id)
     {
@@ -60,14 +57,11 @@ class UserController extends Controller
 
 /**
  * 編集後の更新処理実行
- * 
  */
     public function userUpdate(Request $request,$id)
     {
         // DBから編集前のレコードを取得
         $user = User::findOrFail($id);
-
-        //dd($request->all());
 
         //バリデーションチェック
         $validate = [  
@@ -76,7 +70,7 @@ class UserController extends Controller
             'email'=> 'required|max:255|unique:users,email,'. $id, // 自身のメールアドレスを除外
             'role' => 'required',
         ];
-        // バリデーションエラーメッセージ
+        //バリデーションエラーメッセージ
         $errors = [
             'staff_number.required' => 'この社員番号は既に登録されています。',
             'staff_number.size' => '5桁で入力してください。',
@@ -87,37 +81,30 @@ class UserController extends Controller
             'email.max' => '255文字以内で入力してください。',
             'role.required' => '必須項目です。',
         ];
-
-        // 定義に沿ってバリデーションを実行
+        //定義に沿ってバリデーションを実行
         $request->validate($validate , $errors);
-        
-        // dd($request->all());
 
-        // バリエーションエラーがなければDBに保存
+        //バリエーションエラーがなければDBに保存
         $user->update([
         'staff_number' => $request->staff_number,
         'name' => $request->name,
         'email' => $request->email,
         'role' => $request->role,
         ]);
-        
 
         return redirect('/users')->with('flash_message','アカウント情報が更新されました。');
-
     }
 
 /**
  * 削除処理を実行
- * 
  */
     public function userDestroy($id)
     {
-        // DBから該当するレコードを取得
+        //DBから該当するレコードを取得
         $user = USer::find($id);
-        // レコードを削除
+        //レコードを削除
         $user->delete();
-        // 削除したら一覧画面にリダイレクト
+
         return redirect('/users')->with('flash_message','アカウント情報が削除されました。');
     }
-
 }

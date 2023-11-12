@@ -22,17 +22,17 @@
                 <div class="content-card" >
                     <div class="form-group" >
                         <label for="type_code" class="mb-0">アイテムコード(5桁)<span class="text-danger">　(必須)</span></label>
-                        <input type="text" class="form-control input-size" id="type_code" name="type_code" value="{{ old('type_code') }}">
-                            @error('type_code')
-                                <div class="text-danger error-font-size">{{ $message }}</div>
-                            @enderror
+                            <input type="text" class="form-control input-size" id="type_code" name="type_code" value="{{ old('type_code') }}">
+                                    @error('type_code')
+                                        <div class="text-danger error-font-size">{{ $message }}</div>
+                                    @enderror
                     </div>
                     <div class="form-group" >
                         <label for="type_name" class="mb-0">アイテム名(20文字以内)<span class="text-danger">　(必須)</span></label>
-                        <input type="text" class="form-control input-size" id="type_name" name="type_name" value="{{ old('type_name') }}">
-                            @error('type_name')
-                                <div class="text-danger error-font-size">{{ $message }}</div>
-                            @enderror
+                            <input type="text" class="form-control input-size" id="type_name" name="type_name" value="{{ old('type_name') }}">
+                                    @error('type_name')
+                                        <div class="text-danger error-font-size">{{ $message }}</div>
+                                    @enderror
                     </div>
 
                     <!-- 登録ボタン -->

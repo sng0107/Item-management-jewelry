@@ -59,10 +59,8 @@
                     <th hidden>備考<br>　</th>
                     <th>　　　</th>
                     <th>　　　</th>
-
                 </tr>
             </thead>
-    
             <tbody>
                 @foreach ($sales as  $sale) 
                     <tr>

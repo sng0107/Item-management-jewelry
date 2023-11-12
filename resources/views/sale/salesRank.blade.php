@@ -71,7 +71,7 @@
                 @endphp
                     @foreach ($totalSales as $key => $sale) 
                 @php
-                    // 現在の販売数と前の商品の販売数が同じ場合、同じ順位を保持
+                    //現在の販売数と前の商品の販売数が同じ場合、同じ順位を保持
                     if ($sameRank !== null && $sale->total_sales === $sameRank) {
                         $rank--;
                     }

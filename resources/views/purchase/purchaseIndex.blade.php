@@ -63,8 +63,8 @@
                         <td>{{ $purchase->purchase_date }}</td>
                         <td>{{ $purchase->item->item_code }}</td>
                         <td>{{ $purchase->item->item_name }}</td>
-                        <td class="">{{ number_format($purchase->purchase_price) }}</td>
-                        <td class="">{{ number_format($purchase->purchase_quantity) }}</td>
+                        <td>{{ number_format($purchase->purchase_price) }}</td>
+                        <td>{{ number_format($purchase->purchase_quantity) }}</td>
                         <!-- 仕入先名をコードから名前に変換して表示 -->
                         <td >
                             @if ( $purchase->item->supplier_id )

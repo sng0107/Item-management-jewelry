@@ -73,7 +73,6 @@
                             画像なし
                         @endif
                         </td>
-    
                         <!-- アイテム名をコードから名前に変換して表示 -->
                         <td >
                             @if ( $item->type_id)
@@ -87,7 +86,6 @@
                         <td hidden>{{ $item->sales_period }}</td>
                         <!-- 詳細ボタン -->
                         <td class="align-middle"><a href="/items/detail/{{ $item->id }}" class="btn btn-secondary btn-sm  detail-btn">詳細</a></td>
-                        
                         @can('管理者')
                         <!-- 編集ボタン -->
                         <td class="align-middle"><a href="/items/edit/{{ $item->id }}" class="btn btn-secondary btn-sm edit-btn">編集</a></td>

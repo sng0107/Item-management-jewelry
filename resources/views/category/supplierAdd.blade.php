@@ -22,18 +22,17 @@
                 <div class="content-card" >
                     <div class="form-group" >
                         <label for="supplier_code" class="mb-0">仕入先コード(5桁)<span class="text-danger">　(必須)</span></label>
-                        <input type="text" class="form-control input-size" id="supplier_code" name="supplier_code" value="{{ old('supplier_code') }}">
-                        @error('supplier_code')
-                        <div class="text-danger error-font-size">{{ $message }}</div>
-                        @enderror
+                            <input type="text" class="form-control input-size" id="supplier_code" name="supplier_code" value="{{ old('supplier_code') }}">
+                                @error('supplier_code')
+                                <div class="text-danger error-font-size">{{ $message }}</div>
+                                @enderror
                     </div>
-
                     <div class="form-group" >
                         <label for="supplier_name" class="mb-0">仕入先名(20文字以内)<span class="text-danger">　(必須)</span></label>
-                        <input type="text" class="form-control input-size" id="supplier_name" name="supplier_name" value="{{ old('supplier_name') }}">
-                        @error('supplier_name')
-                        <div class="text-danger error-font-size">{{ $message }}</div>
-                        @enderror
+                            <input type="text" class="form-control input-size" id="supplier_name" name="supplier_name" value="{{ old('supplier_name') }}">
+                                @error('supplier_name')
+                                <div class="text-danger error-font-size">{{ $message }}</div>
+                                @enderror
                     </div>
 
             <!-- 登録ボタン -->

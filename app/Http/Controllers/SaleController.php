@@ -23,183 +23,164 @@ public function __construct()
 
 /**
  * 一覧画面表示
- * 
  */
-public function index(Request $request){
+    public function index(Request $request)
+    {
+        //リレーションを事前に取得
+        $sales = Sale::with('item');
+    
+        //検索フォームからキーワードを取得
+        $search = $request->input('search');
 
-    // リレーションを事前に取得
-    $sales = Sale::with('item');
- 
-    // 検索フォームからキーワードを取得
-    $search = $request->input('search');
-
-    if (!empty($search)) {
-        $sales->where(function($query) use ($search) {
-            $query->whereHas('item', function ($query) use ($search) {
-                $query->where('item_code', 'like', "%{$search}%")
-                    ->orWhere('item_name', 'like', "%{$search}%");
-            })
-            ->orWhere('sale_date', 'like', "%{$search}%")
-            ->orWhere('customer', 'like', "%{$search}%");
-        });
+        if (!empty($search)) {
+            $sales->where(function($query) use ($search) {
+                $query->whereHas('item', function ($query) use ($search) {
+                    $query->where('item_code', 'like', "%{$search}%")
+                        ->orWhere('item_name', 'like', "%{$search}%");
+                })
+                ->orWhere('sale_date', 'like', "%{$search}%")
+                ->orWhere('customer', 'like', "%{$search}%");
+            });
+        }
+        //最近の販売日から順に表示
+        $sales = $sales->orderBy('sale_date', 'desc')->paginate(10)->withQueryString();
+        
+        return view('sale.salesIndex', compact('sales'));
     }
-
-    // 最近の販売日から順に表示
-    $sales = $sales->orderBy('sale_date', 'desc')->paginate(10)->withQueryString();
-     
-    return view('sale.salesIndex', compact('sales'));
- }
 
 
 /**
  * 検索画面表示
- * 
  */
-public function showSearch(Request $request)
-{
-  return view('sale.salesItemSearch');
-}
-
+    public function showSearch(Request $request)
+    {
+    return view('sale.salesItemSearch');
+    }
 
 /**
  * 検索結果表示
- * 
  */
-public function searchResult(Request $request)
-{
-    // 検索フォームからキーワードを取得
-    $search = $request->input('search');
-
-    // 検索条件を追加
-    if (!empty($search))
+    public function searchResult(Request $request)
     {
-        //検索に該当するレコードを取得して商品コード順に表示する
-        $items = Item::with('type')->where('item_code', 'like', "%{$search}%")
-        ->orWhere('item_name', 'like', "%{$search}%")
-        ->orderByRaw('CAST(item_code as SIGNED) ASC')->paginate(10)->withQueryString();
+        //検索フォームからキーワードを取得
+        $search = $request->input('search');
 
-            // キーワードは入力された。itemsDBにはtableが存在する。しかし該当する結果がなかった場合
-            if ($items->isEmpty()) {
-                return view('sale.salesSearchResult');
-            }
-        
-        return view('sale.salesSearchResult', compact('items'));
+        //検索条件を追加
+        if (!empty($search))
+        {
+            //検索に該当するレコードを取得して商品コード順に表示する
+            $items = Item::with('type')->where('item_code', 'like', "%{$search}%")
+            ->orWhere('item_name', 'like', "%{$search}%")
+            ->orderByRaw('CAST(item_code as SIGNED) ASC')->paginate(10)->withQueryString();
 
-    }else
-    {
-        // キーワードが空の場合
-        return redirect()->route('sales.search');
+                //キーワードは入力された。itemsDBにはtableが存在する。しかし該当する結果がなかった場合
+                if ($items->isEmpty()) {
+                    return view('sale.salesSearchResult');
+                }
+            
+            return view('sale.salesSearchResult', compact('items'));
+
+        }else
+        {
+            //キーワードが空の場合
+            return redirect()->route('sales.search');
+        }
     }
-      
-}
 
 
 /**
 * 登録画面表示
-
 */
-public function create($id)
-{
-    // DBから該当するレコードを取得
-    $item = Item::findOrFail($id);
+    public function create($id)
+    {
+        // DBから該当するレコードを取得
+        $item = Item::findOrFail($id);
 
-    return view('sale.salesAdd',compact('item'));
-}
-
+        return view('sale.salesAdd',compact('item'));
+    }
 
 /**
 * 登録処理実行
-
 */
-public function store(Request $request,$id)
-{
-    // dd($request->ALL());
-    //バリデーションチェック
-    $validate = [  
-        'sale_price' => 'required|numeric',
-        'sale_date' => 'required',
-        'sale_quantity' => 'required|numeric',
-        'customer' => 'nullable|max:20',
-        'staff' => 'nullable|max:20',
-        'comment' => 'nullable|max:500',
-    ];
-     // バリデーションエラーメッセージ
-     $errors = [
-        'sale_price.required' => '必須項目です。',
-        'sale_price.numeric' => '数字をご入力ください。',
-        'sale_date.required' => '必須項目です。',
-        'sale_quantity.required' => '必須項目です。',
-        'sale_quantity.numeric' => '数字をご入力ください。',
-        'customer.max' => '20文字以内です。',
-        'staff.max' => '20文字以内です。',
-        'comment.max' => '500文字以内です。',
-    ];
+    public function store(Request $request,$id)
+    {
+        //バリデーションチェック
+        $validate = [  
+            'sale_price' => 'required|numeric',
+            'sale_date' => 'required',
+            'sale_quantity' => 'required|numeric',
+            'customer' => 'nullable|max:20',
+            'staff' => 'nullable|max:20',
+            'comment' => 'nullable|max:500',
+        ];
+        //バリデーションエラーメッセージ
+        $errors = [
+            'sale_price.required' => '必須項目です。',
+            'sale_price.numeric' => '数字をご入力ください。',
+            'sale_date.required' => '必須項目です。',
+            'sale_quantity.required' => '必須項目です。',
+            'sale_quantity.numeric' => '数字をご入力ください。',
+            'customer.max' => '20文字以内です。',
+            'staff.max' => '20文字以内です。',
+            'comment.max' => '500文字以内です。',
+        ];
 
-  
-    // 定義に沿ってバリデーションを実行
-     $request->validate($validate , $errors);
-  
-    //  dd($request->ALL());
+        //定義に沿ってバリデーションを実行
+        $request->validate($validate , $errors);
 
-    // バリエーションエラーがなければDBに保存
-    $sale = new Sale([
-        'user_id' => Auth::id(),
-        'item_id' => $id,
-        'sale_price' => $request->input('sale_price'),
-        'sale_date' => $request->input('sale_date'),
-        'sale_quantity' => $request->input('sale_quantity'),
-        'customer'=> $request->input('customer'),
-        'staff'=> '未設定',
-        'comment'=> $request->input('comment'),
-    ]);
+        //バリエーションエラーがなければDBに保存
+        $sale = new Sale([
+            'user_id' => Auth::id(),
+            'item_id' => $id,
+            'sale_price' => $request->input('sale_price'),
+            'sale_date' => $request->input('sale_date'),
+            'sale_quantity' => $request->input('sale_quantity'),
+            'customer'=> $request->input('customer'),
+            'staff'=> '未設定',
+            'comment'=> $request->input('comment'),
+        ]);
+        $sale->save();
 
-    $sale->save();
+        //在庫数を更新
+        $item = Item::find($id)->decrement('stock', $request->input('sale_quantity'));
 
-    // 在庫数を更新
-    $item = Item::find($id)->decrement('stock', $request->input('sale_quantity'));
-
-    return redirect()->route('sales.index')->with('flash_message', '販売実績が登録されました。');
-}
+        return redirect()->route('sales.index')->with('flash_message', '販売実績が登録されました。');
+    }
 
 
 /**
 * 詳細画面表示
-*
 */
-public function detail($id)
-{
-    // DBから該当するレコードを取得
-    $sale = Sale::with('item')->find($id);
+    public function detail($id)
+    {
+        //DBから該当するレコードを取得
+        $sale = Sale::with('item')->find($id);
 
-    return view('sale.salesDetail',compact('sale'));
-
-}
+        return view('sale.salesDetail',compact('sale'));
+    }
 
 /**
 * 編集画面表示
-*
 */
-public function edit($id)
-{
-    // DBから該当するレコードを取得
-    $sale = Sale::with('item')->find($id);
+    public function edit($id)
+    {
+        // Bから該当するレコードを取得
+        $sale = Sale::with('item')->find($id);
 
-    return view('sale.salesEdit',compact('sale'));
-
-}
+        return view('sale.salesEdit',compact('sale'));
+    }
 
 /**
 * 編集後の更新処理実行
-*
 */
-public function update(Request $request,$id)
+    public function update(Request $request,$id)
     {  
         // DBから編集前のレコードを取得
         $sale = Sale::with('item')->find($id);
 
         if($sale->item->id)
         {
-            // 在庫数を更新（編集で発生した差のみ) 
+            //在庫数を更新（編集で発生した差のみ) 
             $sale->item ->decrement('stock', $request->sale_quantity - $sale->sale_quantity);
         
             //バリデーションチェック
@@ -211,7 +192,7 @@ public function update(Request $request,$id)
                 'staff' => 'nullable|max:20',
                 'comment' => 'nullable|max:500',
             ];
-            // バリデーションエラーメッセージ
+            //バリデーションエラーメッセージ
             $errors = [
                 'sale_price.required' => '必須項目です。',
                 'sale_price.numeric' => '数字をご入力ください。',
@@ -222,11 +203,10 @@ public function update(Request $request,$id)
                 'staff.max' => '20文字以内です。',
                 'comment.max' => '500文字以内です。',
             ];
-        
             // 定義に沿ってバリデーションを実行
             $request->validate($validate , $errors);
 
-            // バリエーションエラーがなければDBに保存
+            //バリエーションエラーがなければDBに保存
             $sale->update([
                 'user_id' => Auth::id(),
                 'sale_price' => $request->sale_price,
@@ -236,7 +216,6 @@ public function update(Request $request,$id)
                 'staff' => '未設定',
                 'comment' => $request->comment,
             ]);
-
             return redirect('/sales')->with('flash_message','販売情報を更新しました。');
         }
         else{
@@ -247,167 +226,148 @@ public function update(Request $request,$id)
 
 /**
  * 複製画面表示
- * 
  */
-public function clone($id)
-{
-    // DBから該当するレコードを取得
-    $sale = Sale::findOrFail($id);
-    
-    return view('sale.salesCopy', compact('sale'));
-}
+    public function clone($id)
+    {
+        //DBから該当するレコードを取得
+        $sale = Sale::findOrFail($id);
+        
+        return view('sale.salesCopy', compact('sale'));
+    }
 
 
 /**
  * 複製登録処理を実行
  */
-public function cloneCreate(Request $request,$id)
-{
-    // DBから該当するレコードを取得
-    $sale = Sale::find($id);
+    public function cloneCreate(Request $request,$id)
+    {
+        //DBから該当するレコードを取得
+        $sale = Sale::find($id);
 
-    //バリデーションチェック
-    $validate = [  
-        'sale_price' => 'required|numeric',
-        'sale_date' => 'required',
-        'sale_quantity' => 'required|numeric',
-        'customer' => 'nullable',
-        'staff' => 'nullable|max:20',
-        'comment' => 'nullable|max:500',
-    ];
-    // バリデーションエラーメッセージ
-    $errors = [
-        'sale_price.required' => '必須項目です。',
-        'sale_price.numeric' => '数字をご入力ください。',
-        'sale_date.required' => '必須項目です。',
-        'sale_quantity.required' => '必須項目です。',
-        'sale_quantity.numeric' => '数字をご入力ください。',
-        'customer.max' => '20文字以内です。',
-        'staff.max' => '20文字以内です。',
-        'comment.max' => '500文字以内です。',
-    ];
-    
-    // 定義に沿ってバリデーションを実行
-    $request->validate($validate , $errors);
+        //バリデーションチェック
+        $validate = [  
+            'sale_price' => 'required|numeric',
+            'sale_date' => 'required',
+            'sale_quantity' => 'required|numeric',
+            'customer' => 'nullable',
+            'staff' => 'nullable|max:20',
+            'comment' => 'nullable|max:500',
+        ];
+        //バリデーションエラーメッセージ
+        $errors = [
+            'sale_price.required' => '必須項目です。',
+            'sale_price.numeric' => '数字をご入力ください。',
+            'sale_date.required' => '必須項目です。',
+            'sale_quantity.required' => '必須項目です。',
+            'sale_quantity.numeric' => '数字をご入力ください。',
+            'customer.max' => '20文字以内です。',
+            'staff.max' => '20文字以内です。',
+            'comment.max' => '500文字以内です。',
+        ];
+        //定義に沿ってバリデーションを実行
+        $request->validate($validate , $errors);
 
-    // バリエーションエラーがなければDBに保存
-    $sale = new Sale([
-        'user_id' => Auth::id(),
-        'item_id' => $sale->item_id,
-        'sale_price' => $request->input('sale_price'),
-        'sale_date' => $request->input('sale_date'),
-        'sale_quantity' => $request->input('sale_quantity'),
-        'customer'=> $request->input('customer'),
-        'staff'=> '未設定',
-        'comment'=> $request->input('comment'),
-    ]);
+        //バリエーションエラーがなければDBに保存
+        $sale = new Sale([
+            'user_id' => Auth::id(),
+            'item_id' => $sale->item_id,
+            'sale_price' => $request->input('sale_price'),
+            'sale_date' => $request->input('sale_date'),
+            'sale_quantity' => $request->input('sale_quantity'),
+            'customer'=> $request->input('customer'),
+            'staff'=> '未設定',
+            'comment'=> $request->input('comment'),
+        ]);
+        $sale->save();
 
-    $sale->save();
+        //在庫数を更新
+        $sale->item->decrement('stock', $request->input('sale_quantity'));
 
-    // 在庫数を更新
-    $sale->item->decrement('stock', $request->input('sale_quantity'));
-
-    return redirect()->route('sales.index')->with('flash_message', '複製から商品が登録されました。');
-}
+        return redirect()->route('sales.index')->with('flash_message', '複製から商品が登録されました。');
+    }
 
 
 /**
 * ランキング画面表示
-*
 */
-public function rank(Request $request)
-{
-    // アイテムテーブルからすべての品番を取得
-    $itemCount = Item::count();
+    public function rank(Request $request)
+    {
+        //アイテムテーブルからすべての品番を取得
+        $itemCount = Item::count();
 
-    // ランキング作成(販売数0だと表示されない)
-    // $totalSales = Sale::with('item')->select('item_id', DB::raw('SUM(sale_quantity) as total_sales'))
-    // ->groupBy('item_id')
-    // ->orderBy('total_sales', 'desc');
+        //ランキングALL作成(販売数0だと表示されない)
+        //$totalSales = Sale::with('item')->select('item_id', DB::raw('SUM(sale_quantity) as total_sales'))
+        //->groupBy('item_id')
+        //->orderBy('total_sales', 'desc');
 
-    // ランキング作成(販売数0も表示される)
-    $totalSales = Sale::rightJoin('items', 'sales.item_id', '=', 'items.id')
-    ->select('items.id', 'items.item_code', 'items.item_name','items.stock','items.retail_price')
-    ->selectRaw('COALESCE(SUM(sales.sale_quantity), 0) as total_sales')
-    ->groupBy('items.id', 'items.item_code', 'items.item_name','items.stock','items.retail_price')
-    ->orderBy('total_sales', 'desc');
-    
-    // 検索フォームからキーワードと期間を取得
-    $search = $request->input('search');
-    $dayFrom = $request->input('dayFrom');
-    $dayTo = $request->input('dayTo');
+        //ランキングALL作成(販売数0も表示される)
+        $totalSales = Sale::rightJoin('items', 'sales.item_id', '=', 'items.id')
+        ->select('items.id', 'items.item_code', 'items.item_name','items.stock','items.retail_price')
+        ->selectRaw('COALESCE(SUM(sales.sale_quantity), 0) as total_sales')
+        ->groupBy('items.id', 'items.item_code', 'items.item_name','items.stock','items.retail_price')
+        ->orderBy('total_sales', 'desc');
+        
+        //検索フォームからキーワードと期間を取得
+        $search = $request->input('search');
+        $dayFrom = $request->input('dayFrom');
+        $dayTo = $request->input('dayTo');
 
-    // 商品キーワード検索のみ入力された場合の検索結果を取得 
-    if (!empty($search && $dayFrom==null && $dayTo==null)) {
-        // キーワードの検索条件を設定
-        $totalSales->where(function($query) use ($search) {
-            $query->whereHas('item', function ($query) use ($search) {
-                $query->where('item_code', 'like', "%{$search}%")
-                    ->orWhere('item_name', 'like', "%{$search}%");
+        // 品キーワード検索のみ入力された場合の検索結果を取得 
+        if (!empty($search && $dayFrom==null && $dayTo==null)) {
+            // キーワードの検索条件を設定
+            $totalSales->where(function($query) use ($search) {
+                $query->whereHas('item', function ($query) use ($search) {
+                    $query->where('item_code', 'like', "%{$search}%")
+                        ->orWhere('item_name', 'like', "%{$search}%");
+                });
             });
-        });
-        // 販売数が0でも検索結果を表示しようとしたが、　
-        // 該当する結果がない場合に販売数0の商品が表示されてしまうのでコメントアウト
-        //$totalSales->orWhereDoesntHave('item');
+            //TODO:販売数が0でも検索結果を表示しようとしたが、　
+            //該当する結果がない場合に販売数0の商品が表示されてしまうので後日調査
+            //$totalSales->orWhereDoesntHave('item');
+        }
+
+        //集計期間のみ検索入力された場合の検索結果を取得
+        if($search==null && !empty($dayFrom) && !empty($dayTo)) {
+            //販売期間の検索条件を設定
+            $totalSales->whereBetween('sale_date', [$dayFrom, $dayTo]);
+        }
     
+        //商品と期間の両方に該当する結果を取得
+        if(!empty($search) && !empty($dayFrom) && !empty($dayTo)) {
+            //日付範囲の検索条件を設定
+            $totalSales->where(function($query) use ($search,$dayFrom,$dayTo) 
+            {
+                $query->whereHas('item', function ($query) use ($search) {
+                    $query->where('item_code', 'like', "%{$search}%")
+                        ->orWhere('item_name', 'like', "%{$search}%");
+                })
+                    ->whereBetween('sale_date', [$dayFrom, $dayTo]);
+            });
+        }
+        $totalSales = $totalSales->get();
+
+        return view('sale.salesRank',compact('totalSales','itemCount'));
     }
-
-    // 集計期間のみ検索入力された場合の検索結果を取得
-    if($search==null && !empty($dayFrom) && !empty($dayTo)) {
-        // 販売期間の検索条件を設定
-        $totalSales->whereBetween('sale_date', [$dayFrom, $dayTo]);
-
-    }
- 
-    // 商品と期間の両方に該当する結果を取得
-    if(!empty($search) && !empty($dayFrom) && !empty($dayTo)) {
-        // 日付範囲の検索条件を設定
-        $totalSales->where(function($query) use ($search,$dayFrom,$dayTo) 
-        {
-            $query->whereHas('item', function ($query) use ($search) {
-                $query->where('item_code', 'like', "%{$search}%")
-                    ->orWhere('item_name', 'like', "%{$search}%");
-            })
-                ->whereBetween('sale_date', [$dayFrom, $dayTo]);
-          
-        });
-    }
-
-    $totalSales = $totalSales->get();
-
-    //dd($request->all());
-    //dd($totalSales);
-
-    return view('sale.salesRank',compact('totalSales','itemCount'));
-
-}
-
-
 
 /**
  * 削除処理実行
- * 
  */
-public function destroy($id){
-
-    // DBから該当するレコードを取得
-    $sale = Sale::with('item')->find($id);
-
-    if($sale->item->id)
+    public function destroy($id)
     {
-        // 在庫数を更新（削除の前に行う)
-        $sale->item ->increment('stock', $sale->sale_quantity);
+        // DBから該当するレコードを取得
+        $sale = Sale::with('item')->find($id);
 
-        // レコードを削除
-        $sale->delete();
+        if($sale->item->id)
+        {
+            // 在庫数を更新（削除の前に行う)
+            $sale->item ->increment('stock', $sale->sale_quantity);
+            // レコードを削除
+            $sale->delete();
 
-        return redirect('/sales')->with('flash_messae', '販売情報を削除しました。');
-            }else{
+            return redirect('/sales')->with('flash_messae', '販売情報を削除しました。');
+        }else{
 
-        return redirect('/sales')->with('flash_messae', '商品が存在しません。削除できません。');
- 
+            return redirect('/sales')->with('flash_messae', '商品が存在しません。削除できません。');
+        }
     }
-}
-
-
 }
